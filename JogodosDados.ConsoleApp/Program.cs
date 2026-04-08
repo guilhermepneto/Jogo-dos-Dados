@@ -52,6 +52,18 @@ while (vitoria == false)
         Console.WriteLine("-------------------------");
         Console.WriteLine();
 
+        if (dado == 6)
+        {
+            Console.WriteLine("VOCÊ TIROU O NÚMERO 6, JOGUE OS DADOS NOVAMENTE");
+
+            dado = RandomNumberGenerator.GetInt32(1, 7);
+            Console.WriteLine("Você roda o dado e o número que cai é: " + dado);
+
+            pos = pos + dado;
+            Console.WriteLine("Sua posição atual é: " + pos);
+            Console.WriteLine("-------------------------");
+            Console.WriteLine();
+        }
 
         switch (pos)
         {
@@ -119,6 +131,19 @@ while (vitoria == false)
         Console.WriteLine("-------------------------");
         Console.WriteLine();
 
+        if (dado == 6)
+        {
+            Console.WriteLine("A MÁQUINA TIROU O NÚMERO 6, JOGUE OS DADOS NOVAMENTE");
+
+            dado = RandomNumberGenerator.GetInt32(1, 7);
+            Console.WriteLine("A máquina roda o dado e o número que cai é: " + dado);
+
+            pospc = pospc + dado;
+            Console.WriteLine("A posição atual da máquina é: " + pos);
+            Console.WriteLine("-------------------------");
+            Console.WriteLine();
+        }
+
         switch (pospc)
         {
             case 2:
@@ -176,9 +201,6 @@ while (vitoria == false)
     {
         saida = 1;
     }
-
-
-
 }
 
 
