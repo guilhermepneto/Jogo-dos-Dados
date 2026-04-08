@@ -139,7 +139,7 @@ while (vitoria == false)
             Console.WriteLine("A máquina roda o dado e o número que cai é: " + dado);
 
             pospc = pospc + dado;
-            Console.WriteLine("A posição atual da máquina é: " + pos);
+            Console.WriteLine("A posição atual da máquina é: " + pospc);
             Console.WriteLine("-------------------------");
             Console.WriteLine();
         }
