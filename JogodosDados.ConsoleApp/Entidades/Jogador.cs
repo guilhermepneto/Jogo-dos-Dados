@@ -4,7 +4,10 @@ using System.Security.Cryptography;
 
 public class Jogador
 {
-    public static int ExecutarRodada(int pos, int chegada)
+
+    public static int posJogador = 0;
+    const int chegada = 30;
+    public static void ExecutarRodada()
     {
         Console.Clear();
         Console.WriteLine("-------------------------");
@@ -19,8 +22,8 @@ public class Jogador
         int dado = RandomNumberGenerator.GetInt32(1, 7);
         Console.WriteLine("Você roda o dado e o número que cai é: " + dado);
 
-        pos += dado;
-        Console.WriteLine("Sua posição atual é: " + pos);
+        posJogador += dado;
+        Console.WriteLine("Sua posição atual é: " + posJogador);
         Console.WriteLine("-------------------------");
         Console.WriteLine();
 
@@ -31,19 +34,19 @@ public class Jogador
             dado = RandomNumberGenerator.GetInt32(1, 7);
             Console.WriteLine("Você roda o dado e o número que cai é: " + dado);
 
-            pos += dado;
-            Console.WriteLine("Sua posição atual é: " + pos);
+            posJogador += dado;
+            Console.WriteLine("Sua posição atual é: " + posJogador);
             Console.WriteLine("-------------------------");
             Console.WriteLine();
         }
 
-        switch (pos)
+        switch (posJogador)
         {
             case 2:
             case 10:
                 Console.WriteLine("AVANÇO EXTRA, PULE 2 CASAS");
-                pos = pos + 2;
-                Console.WriteLine("Sua posição agora é: " + pos);
+                posJogador = posJogador + 2;
+                Console.WriteLine("Sua posição agora é: " + posJogador);
                 Console.WriteLine("-------------------------");
                 Console.WriteLine();
 
@@ -52,8 +55,8 @@ public class Jogador
             case 16:
             case 7:
                 Console.WriteLine("AVANÇO EXTRA, PULE 3 CASAS");
-                pos = pos + 3;
-                Console.WriteLine("Sua posição agora é: " + pos);
+                posJogador = posJogador + 3;
+                Console.WriteLine("Sua posição agora é: " + posJogador);
                 Console.WriteLine("-------------------------");
                 Console.WriteLine();
 
@@ -62,8 +65,8 @@ public class Jogador
             case 26:
             case 5:
                 Console.WriteLine("DÊ MEIA VOLTA, RETORNE 2 CASAS");
-                pos = pos - 2;
-                Console.WriteLine("Sua posição agora é: " + pos);
+                posJogador = posJogador - 2;
+                Console.WriteLine("Sua posição agora é: " + posJogador);
                 Console.WriteLine("-------------------------");
                 Console.WriteLine();
 
@@ -72,21 +75,25 @@ public class Jogador
             case 18:
             case 29:
                 Console.WriteLine("DÊ MEIA VOLTA, RETORNE 3 CASAS");
-                pos = pos - 3;
-                Console.WriteLine("Sua posição agora é: " + pos);
+                posJogador = posJogador - 3;
+                Console.WriteLine("Sua posição agora é: " + posJogador);
                 Console.WriteLine("-------------------------");
                 Console.WriteLine();
 
                 break;
         }
 
-        MensagemJogador(pos, chegada);
-        return pos;
+        MensagemJogador(chegada);
     }
 
-    private static void MensagemJogador(int pos, int chegada)
+    public static bool GanhouPartida()
     {
-        if (pos >= chegada)
+        return Jogador.posJogador >= chegada;
+    }
+
+    private static void MensagemJogador(int chegada)
+    {
+        if (posJogador >= chegada)
         {
             Console.WriteLine("PARABÉNS, VOCê CHEGOU AO FINAL PRIMEIRO!!!!");
             Console.WriteLine("Pressione qualquer teclar para continuar!");

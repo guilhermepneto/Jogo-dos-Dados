@@ -6,19 +6,17 @@ class Program
 {
     static void Main(string[] args)
     {
-        int chegada = 30;
-
         while (true)
         {
-            int pos = 0;
+
             int pospc = 0;
 
             while (true)
             {
                 //Rodada jogador
-                pos = Jogador.ExecutarRodada(pos, chegada);
+                Jogador.ExecutarRodada();
 
-                if (pos >= chegada)
+                if (Jogador.GanhouPartida())
                     break;
 
                 //Rodada do PC
