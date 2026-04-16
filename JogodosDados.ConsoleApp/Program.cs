@@ -1,53 +1,58 @@
-﻿using System.Security.Cryptography;
+﻿using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
-//CORRIDA DOS DADOS
-
-Console.Clear();
-
-Console.WriteLine("-------------------------");
-Console.WriteLine("Seja bem vindo à corrida de dados, seu objetivo é cruzar a linha de chegada antes do computador. Você se considera uma pessoa de sorte?");
-Console.WriteLine("Pressione qualquer tecla para iniciar o jogo!");
-Console.WriteLine("-------------------------");
-Console.ReadLine();
-
-Console.WriteLine("O sistema irá decidir quem começa, se o dado cair 1, o jogador começa, caso caia 2, a máquina dará início");
-Console.WriteLine("Pressione qualquer tecla para iniciar o jogo!");
-Console.ReadLine();
-
-int saida = RandomNumberGenerator.GetInt32(1, 3);
-Console.WriteLine("O número sorteado foi " + saida);
-
-if (saida == 1)
+class Program
 {
-    Console.WriteLine("O jogador recebeu a honra de iniciar o caminho");
-    Console.WriteLine("-------------------------");
-    Console.WriteLine();
-}
-else
-{
-    Console.WriteLine("A máquina vai dar o primeiro passo!");
-    Console.WriteLine("-------------------------");
-    Console.WriteLine();
-}
-
-bool vitoria = false;
-int rodada = 1;
-int pos = 0;
-int pospc = 0;
-
-while (vitoria == false)
-{
-    if (saida == 1)
+    static void Main(string[] args)
     {
+        int chegada = 30;
+
+        while (true)
+        {
+            int pos = 0;
+            int pospc = 0;
+
+            while (true)
+            {
+                pos = ExecutarRodadaJogador(pos);
+
+                MensagemJogador(pos, chegada);
+                if (pos >= chegada)
+                    break;
+
+                pospc = ExecutarRodadaPC(pospc);
+
+                MensagemPC(pospc, chegada);
+                if (pospc >= chegada)
+                    break;
+            }
+            Console.WriteLine("--------------------------------------");
+            Console.Write("Deseja continuar? (s/N): ");
+            string? opcaoContinuar = Console.ReadLine()?.ToUpper();
+
+            if (opcaoContinuar != "S")
+                break;
+        }
+
+    }
+
+    static int ExecutarRodadaJogador(int pos)
+    {
+        Console.Clear();
+        Console.WriteLine("-------------------------");
+        Console.WriteLine("Corrida dos dados");
+        Console.WriteLine("-------------------------");
+        Console.WriteLine();
+
         Console.WriteLine("Vez do jogador!");
-        Console.WriteLine("RODADA nº " + rodada);
         Console.WriteLine("Pressione qualquer tecla para continuar");
         Console.ReadLine();
 
         int dado = RandomNumberGenerator.GetInt32(1, 7);
         Console.WriteLine("Você roda o dado e o número que cai é: " + dado);
 
-        pos = pos + dado;
+        pos += dado;
         Console.WriteLine("Sua posição atual é: " + pos);
         Console.WriteLine("-------------------------");
         Console.WriteLine();
@@ -59,7 +64,7 @@ while (vitoria == false)
             dado = RandomNumberGenerator.GetInt32(1, 7);
             Console.WriteLine("Você roda o dado e o número que cai é: " + dado);
 
-            pos = pos + dado;
+            pos += dado;
             Console.WriteLine("Sua posição atual é: " + pos);
             Console.WriteLine("-------------------------");
             Console.WriteLine();
@@ -108,37 +113,55 @@ while (vitoria == false)
                 break;
         }
 
-        if (pos >= 30)
+        return pos;
+    }
+
+    static void MensagemJogador(int pos, int chegada)
+    {
+        if (pos >= chegada)
         {
             Console.WriteLine("PARABÉNS, VOCê CHEGOU AO FINAL PRIMEIRO!!!!");
-            vitoria = true;
+            Console.WriteLine("Pressione qualquer teclar para continuar!");
+            Console.ReadLine();
+        }
+        else
+        {
+            Console.WriteLine("--------------------------------------");
+            Console.Write("Pressione ENTER para continuar...");
+            Console.ReadLine();
         }
 
-        rodada++;
     }
-    else
+
+    static int ExecutarRodadaPC(int pospc)
     {
-        Console.WriteLine("Vez da máquina!");
-        Console.WriteLine("RODADA nº " + rodada);
+        Console.Clear();
+        Console.WriteLine("--------------------------------------");
+        Console.WriteLine("Corrida dos Dados");
+        Console.WriteLine("--------------------------------------");
+        Console.WriteLine();
+
+        Console.WriteLine("Vez do Computador");
         Console.WriteLine("Pressione qualquer tecla para continuar");
         Console.ReadLine();
 
-        int dado = RandomNumberGenerator.GetInt32(1, 7);
-        Console.WriteLine("A máquina roda o dado e o número que cai é: " + dado);
 
-        pospc = pospc + dado;
+        int dadopc = RandomNumberGenerator.GetInt32(1, 7);
+        Console.WriteLine("A máquina roda o dado e o número que cai é: " + dadopc);
+
+        pospc += dadopc;
         Console.WriteLine("A posição atual da máquina é: " + pospc);
         Console.WriteLine("-------------------------");
         Console.WriteLine();
 
-        if (dado == 6)
+        if (dadopc == 6)
         {
             Console.WriteLine("A MÁQUINA TIROU O NÚMERO 6, JOGUE OS DADOS NOVAMENTE");
 
-            dado = RandomNumberGenerator.GetInt32(1, 7);
-            Console.WriteLine("A máquina roda o dado e o número que cai é: " + dado);
+            dadopc = RandomNumberGenerator.GetInt32(1, 7);
+            Console.WriteLine("A máquina roda o dado e o número que cai é: " + dadopc);
 
-            pospc = pospc + dado;
+            pospc += dadopc;
             Console.WriteLine("A posição atual da máquina é: " + pospc);
             Console.WriteLine("-------------------------");
             Console.WriteLine();
@@ -186,25 +209,29 @@ while (vitoria == false)
 
                 break;
         }
+        return pospc;
+    }
 
-        if (pospc >= 30)
+    static void MensagemPC(int pospc, int chegada)
+    {
+        if (pospc >= chegada)
         {
             Console.WriteLine("A MÁQUINA TE VENCEU, MAIS SORTE NA PRÓXIMA VEZ");
-            vitoria = true;
+            Console.WriteLine("Pressione qualquer tecla para continuar!");
+            Console.ReadLine();
         }
+        else
+        {
+            Console.WriteLine("--------------------------------------");
+            Console.Write("Pressione ENTER para continuar...");
+            Console.ReadLine();
+        }
+
     }
-    if (saida == 1)
-    {
-        saida = 2;
-    }
-    else
-    {
-        saida = 1;
-    }
+
 }
 
 
-Console.ReadLine();
 
 
 
