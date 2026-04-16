@@ -8,8 +8,8 @@ class Program
     {
         while (true)
         {
-
-            int pospc = 0;
+            Jogador.posicao = 0;
+            Computador.posicao = 0;
 
             while (true)
             {
@@ -20,9 +20,9 @@ class Program
                     break;
 
                 //Rodada do PC
-                pospc = Computador.ExecutarRodada(pospc, chegada);
+                Computador.ExecutarRodada();
 
-                if (pospc >= chegada)
+                if (Computador.GanhouPartida())
                     break;
             }
             Console.WriteLine("--------------------------------------");

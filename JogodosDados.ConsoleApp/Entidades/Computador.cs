@@ -1,9 +1,13 @@
 using System.Security.Cryptography;
 namespace JogodosDados.ConsoleApp.Entidades;
 
-public class Computador
+public static class Computador
 {
-    public static int ExecutarRodada(int pospc, int chegada)
+
+    public static int posicao = 0;
+    const int chegada = 30;
+
+    public static void ExecutarRodada()
     {
         Console.Clear();
         Console.WriteLine("--------------------------------------");
@@ -19,8 +23,8 @@ public class Computador
         int dadopc = RandomNumberGenerator.GetInt32(1, 7);
         Console.WriteLine("A máquina roda o dado e o número que cai é: " + dadopc);
 
-        pospc += dadopc;
-        Console.WriteLine("A posição atual da máquina é: " + pospc);
+        posicao += dadopc;
+        Console.WriteLine("A posição atual da máquina é: " + posicao);
         Console.WriteLine("-------------------------");
         Console.WriteLine();
 
@@ -31,19 +35,19 @@ public class Computador
             dadopc = RandomNumberGenerator.GetInt32(1, 7);
             Console.WriteLine("A máquina roda o dado e o número que cai é: " + dadopc);
 
-            pospc += dadopc;
-            Console.WriteLine("A posição atual da máquina é: " + pospc);
+            posicao += dadopc;
+            Console.WriteLine("A posição atual da máquina é: " + posicao);
             Console.WriteLine("-------------------------");
             Console.WriteLine();
         }
 
-        switch (pospc)
+        switch (posicao)
         {
             case 2:
             case 10:
                 Console.WriteLine("AVANÇO EXTRA, PULE 2 CASAS");
-                pospc = pospc + 2;
-                Console.WriteLine("A posição da máquina agora é: " + pospc);
+                posicao = posicao + 2;
+                Console.WriteLine("A posição da máquina agora é: " + posicao);
                 Console.WriteLine("-------------------------");
                 Console.WriteLine();
 
@@ -52,8 +56,8 @@ public class Computador
             case 16:
             case 7:
                 Console.WriteLine("AVANÇO EXTRA, PULE 3 CASAS");
-                pospc = pospc + 3;
-                Console.WriteLine("A posição da máquina agora é: " + pospc);
+                posicao = posicao + 3;
+                Console.WriteLine("A posição da máquina agora é: " + posicao);
                 Console.WriteLine("-------------------------");
                 Console.WriteLine();
 
@@ -62,8 +66,8 @@ public class Computador
             case 26:
             case 5:
                 Console.WriteLine("DÊ MEIA VOLTA, RETORNE 2 CASAS");
-                pospc = pospc - 2;
-                Console.WriteLine("A posição da máquina agora é: " + pospc);
+                posicao = posicao - 2;
+                Console.WriteLine("A posição da máquina agora é: " + posicao);
                 Console.WriteLine("-------------------------");
                 Console.WriteLine();
 
@@ -72,20 +76,24 @@ public class Computador
             case 18:
             case 29:
                 Console.WriteLine("DÊ MEIA VOLTA, RETORNE 3 CASAS");
-                pospc = pospc - 3;
-                Console.WriteLine("A posição da máquina agora é: " + pospc);
+                posicao = posicao - 3;
+                Console.WriteLine("A posição da máquina agora é: " + posicao);
                 Console.WriteLine("-------------------------");
                 Console.WriteLine();
 
                 break;
         }
-        MensagemPC(pospc, chegada);
-        return pospc;
+        MensagemPC();
     }
 
-    private static void MensagemPC(int pospc, int chegada)
+    public static bool GanhouPartida()
     {
-        if (pospc >= chegada)
+        return posicao >= chegada;
+    }
+
+    private static void MensagemPC()
+    {
+        if (posicao >= chegada)
         {
             Console.WriteLine("A MÁQUINA TE VENCEU, MAIS SORTE NA PRÓXIMA VEZ");
             Console.WriteLine("Pressione qualquer tecla para continuar!");
